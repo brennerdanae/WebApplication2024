@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/GuestElement"
+  },
+  "definitions": {
+    "GuestElement": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "company": {
+          "$ref": "#/definitions/Company"
+        }
+      },
+      "required": [
+        "address",
+        "email",
+        "id",
+        "name",
+        "phone",
+        "username",
+        "website"
+      ],
+      "title": "GuestElement"
+    },
+    "Address": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "suite": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zipcode": {
+          "type": "string"
+        },
+        "geo": {
+          "$ref": "#/definitions/Geo"
+        }
+      },
+      "required": [
+        "city",
+        "street",
+        "suite",
+        "zipcode"
+      ],
+      "title": "Address"
+    },
+    "Geo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lat": {
+          "type": "string"
+        },
+        "lng": {
+          "type": "string"
+        }
+      },
+      "title": "Geo"
+    },
+    "Company": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "catchPhrase": {
+          "type": "string"
+        },
+        "bs": {
+          "type": "string"
+        }
+      },
+      "title": "Company"
+    }
+  }
+}

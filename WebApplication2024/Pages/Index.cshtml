@@ -1,10 +1,41 @@
 ﻿@page
+@using WebApplication2024
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    var brand = ViewData["Brand"];
+    ViewData["Title"] = brand;
+    List<Guest> guests = (List<Guest>) ViewData["Guests"];
+    var apikey = ViewData["apikey"];
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    @apikey
+    <h1 class="display-4">Welcome to @brand</h1>
     <p>App to track Guest data.</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Website</th>
+        </tr>
+        @{
+            foreach(Guest guest in guests)
+            {
+           
+                <tr>
+                    <td>@guest.Id</td>
+                    <td>@guest.Name</td>
+                    <td>@guest.Username</td>
+                    <td>@guest.Email</td>
+                    <td>@guest.Address.Street, @guest.Address.City, @guest.Address.Zipcode</td>
+                    <td>@guest.Phone</td>
+                    <td>@guest.Website</td>
+                </tr>
+            }
+        }
+    </table>
 </div>
