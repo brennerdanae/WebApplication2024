@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using NHibernate.Cache;
-using LazyCache;
-using ICacheProvider = NHibernate.Cache.ICacheProvider;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WebApplication2024
 {
@@ -13,12 +14,6 @@ namespace WebApplication2024
         {
             _cache = memoryCache;
         }
-
-        public ICache BuildCache(string regionName, IDictionary<string, string> properties)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Guest>> GetCachedResponse()
         {
             try
@@ -30,38 +25,22 @@ namespace WebApplication2024
                 throw;
             }
         }
-
-        public long NextTimestamp()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Start(IDictionary<string, string> properties)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Stop()
-        {
-            throw new NotImplementedException();
-        }
-
         private async Task<IEnumerable<Guest>> GetCachedResponse(string cacheKey, SemaphoreSlim semaphore)
         {
-            bool isAvailable = _cache.TryGetValue(cacheKey, out List<Guest> guests);
-            if (isAvailable) return guests;
+            bool isAvaiable = _cache.TryGetValue(cacheKey, out List<Guest> guests);
+            if (isAvaiable) return guests;
             try
             {
                 await semaphore.WaitAsync();
-                isAvailable = _cache.TryGetValue(cacheKey, out guests);
-                if (isAvailable) return guests;
-                //currently using read-only JSON 
-                //guests = GuestService.GetGuestsDetailsFromDB();
+                isAvaiable = _cache.TryGetValue(cacheKey, out guests);
+                if (isAvaiable) return guests;
+                //currently using read-only JSON
+                //guests = GuestService.GetEmployeesDeatilsFromDB();
                 var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.Now.AddMinutes(5),
                     SlidingExpiration = TimeSpan.FromMinutes(2),
-                    Size = 1024
+                    Size = 1024,
                 };
                 _cache.Set(cacheKey, guests, cacheEntryOptions);
             }

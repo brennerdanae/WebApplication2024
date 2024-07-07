@@ -21,23 +21,22 @@ namespace WebApplication2024.Controllers
         [Route("getAllGuest")]
         public IActionResult GetAllGuest()
         {
-                try
-                {
+            try
+            {
                 var guests = _cacheProvider.GetCachedResponse().Result;
-                    return Ok(guests);
-                }
-                catch (Exception ex)
+                return Ok(guests);
+            }
+            catch (Exception ex)
+            {
+                return new ContentResult()
                 {
-                    return new ContentResult()
-                    {
-                        StatusCode = 500,
-                        Content = "{ \n error : " + ex.Message + "}",
-                        ContentType = "application/json"
-                    };
-                }
-          
-        }
+                    StatusCode = 500,
+                    Content = "{ \n error : " + ex.Message + "}",
+                    ContentType = "application/json"
+                };
+            }
 
+        }
 
         // GET: api/<ValuesController>
         [HttpGet]
