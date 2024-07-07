@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection.KeyManagement.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using NHibernate.Cache;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +12,33 @@ namespace WebApplication2024.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private ICacheProvider _cacheProvider;
+        public ValuesController(ICacheProvider cacheProvider)
+        {
+            _cacheProvider = cacheProvider;
+        }
+
+        [Route("getAllGuest")]
+        public IActionResult GetAllGuest()
+        {
+                try
+                {
+                var guests = _cacheProvider.GetCachedResponse().Result;
+                    return Ok(guests);
+                }
+                catch (Exception ex)
+                {
+                    return new ContentResult()
+                    {
+                        StatusCode = 500,
+                        Content = "{ \n error : " + ex.Message + "}",
+                        ContentType = "application/json"
+                    };
+                }
+          
+        }
+
+
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<Guest> Get()
