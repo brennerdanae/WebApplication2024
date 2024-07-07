@@ -21,6 +21,7 @@ namespace WebApplication2024.Pages
         {
             List<Guest> guests = GetGuestData();
             ViewData["Guests"] = guests;
+            GuestRoster.allGuests = guests;
 
             var config = new ConfigurationBuilder()
                 .AddUserSecrets<Program>()
