@@ -28,12 +28,12 @@ namespace WebApplication2024.Controllers
          *}
          */
 
-        private ICacheProvider _cacheProvider;
+        /*private ICacheProvider _cacheProvider;
         public ValuesController(ICacheProvider cacheProvider)
         {
             _cacheProvider = cacheProvider;
         }
-
+        */
         //[Route("getAllGuest")]
         //public IActionResult GetAllGuest()
         //{

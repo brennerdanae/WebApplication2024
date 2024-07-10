@@ -60,7 +60,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseMvc();
+//app.UseMvc();
 
 app.MapRazorPages();
 
